@@ -13,16 +13,16 @@ if sys.platform == 'win32':
 
 ext_modules = [
     Extension(
-        'pycocotools._mask',
-        sources=['./pycocotools/headers/maskApi.c', 'pycocotools/_mask.pyx'],
-        include_dirs = [np.get_include(), './pycocotools/headers'],
+        'coco_analyze._mask',
+        sources=['./coco_analyze/headers/maskApi.c', 'coco_analyze/_mask.pyx'],
+        include_dirs = [np.get_include(), './coco_analyze/headers'],
         extra_compile_args=extra_compile_args,
     )
 ]
 
-setup(name='pycocotools',
-      packages=['pycocotools'],
-      package_dir = {'pycocotools': 'pycocotools'},
+setup(name='coco_analyze',
+      packages=['coco_analyze'],
+      package_dir = {'coco_analyze': 'coco_analyze'},
       version='2.0',
       ext_modules=
           cythonize(ext_modules)
