@@ -70,7 +70,6 @@ class COCOeval:
             print('<{}:{}>iouType not specified. use default iouType segm'.format(__author__,__version__))
         self.cocoGt   = cocoGt              # ground truth COCO API
         self.cocoDt   = cocoDt              # detections COCO API
-        self.params   = {}                  # evaluation parameters
         self.evalImgs = defaultdict(list)   # per-image per-category evaluation results [KxAxI] elements
         self.eval     = {}                  # accumulated evaluation results
         self._gts = defaultdict(list)       # gt for evaluation
@@ -213,7 +212,7 @@ class COCOeval:
         if len(gts) == 0 or len(dts) == 0:
             return []
         ious = np.zeros((len(dts), len(gts)))
-        sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
+        sigmas = p.kpt_oks_sigmas
         vars = (sigmas * 2)**2
         k = len(sigmas)
 
@@ -622,6 +621,7 @@ class Params:
         self.areaRng = [[0 ** 2, 1e5 ** 2], [32 ** 2, 96 ** 2], [96 ** 2, 1e5 ** 2]]
         self.areaRngLbl = ['all', 'medium', 'large']
         self.useCats = 1
+        self.kpt_oks_sigmas = np.array([.26, .25, .25, .35, .35, .79, .79, .72, .72, .62,.62, 1.07, 1.07, .87, .87, .89, .89])/10.0
         # use gt ignores flag to discard any gt_id from evaluation
         self.useGtIgnore = 0
         self.gtIgnoreIds = set()
